@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Bowdlerize</string>
+    <string name="app_name">Censorship Monitoring Client</string>
     <string name="actionBarTitle">Bowdlerize - The Censor Census</string>
     <string name="actionBarSubtitle">Making censorship accountable</string>
     <string name="title_section1">Wireless Config</string>
@@ -20,7 +20,7 @@
     <string name="warningAgreed">Thank you for helping to make the Internet more accountable!</string>
 
     <!-- Fragment ORG -->
-    <string name="orgIntro">If you would also also like to participate in the Open Rights Group Censorship Monitoring Program ( http://bit.ly/18B4e8Y ) you will need to signup and configure your device as a probe.</string>
+    <string name="orgIntro">If you would also like to participate in the Open Rights Group Censorship Monitoring Program ( http://bit.ly/18B4e8Y ) you will need to signup and configure your device as a probe.</string>
     <string name="orgUnavailable">THIS FEATURE IS UNAVAILABLE AT THE MOMENT</string>
 
     <!--Fragment - Wireless -->

@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Possibly Censored:"
-        android:id="@+id/censoredLabel"
+        android:id="@+id/textView"
         android:layout_below="@+id/statsCheckedLabel"
         android:layout_alignLeft="@+id/statsCheckedLabel"
         android:paddingTop="40dp" />
@@ -29,8 +29,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="0"
         android:id="@+id/censoredCount"
-        android:layout_alignBottom="@+id/censoredLabel"
-        android:layout_toRightOf="@+id/censoredLabel"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toRightOf="@+id/textView"
         android:paddingLeft="20dp" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="0"
         android:id="@+id/checkedCount"
-        android:layout_above="@+id/censoredLabel"
+        android:layout_above="@+id/textView"
         android:layout_toRightOf="@+id/statsCheckedLabel"
         android:paddingLeft="20dp" />
 </RelativeLayout>

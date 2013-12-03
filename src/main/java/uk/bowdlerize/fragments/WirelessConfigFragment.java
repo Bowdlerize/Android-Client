@@ -96,9 +96,8 @@ public class WirelessConfigFragment extends Fragment
 
             newNetworkIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
-                    Toast.makeText(getActivity(),getString(R.string.wirelessNew),Toast.LENGTH_SHORT).show();
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(), getString(R.string.wirelessNew), Toast.LENGTH_SHORT).show();
                     Animation shakeIt = AnimationUtils.loadAnimation(getActivity(), R.anim.wobble);
                     v.startAnimation(shakeIt);
                 }
@@ -108,7 +107,7 @@ public class WirelessConfigFragment extends Fragment
         ISPName = ((EditText) rootView.findViewById(R.id.WiFiISPET));
         rootView.findViewById(R.id.SSIDNameSaveButton).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
+            public void onClick(final View v)
             {
                 LocalCache lc = null;
 
@@ -124,6 +123,25 @@ public class WirelessConfigFragment extends Fragment
                     Animation animationFadeOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout);
                     v.startAnimation(animationFadeOut);
                     newNetworkIcon.startAnimation(animationFadeOut);
+                    animationFadeOut.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation)
+                        {
+                            v.setVisibility(View.INVISIBLE);
+                            newNetworkIcon.setVisibility(View.INVISIBLE);
+                            ISPName.setEnabled(false);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
                     v.setEnabled(false);
                 }
                 catch (Exception e)
