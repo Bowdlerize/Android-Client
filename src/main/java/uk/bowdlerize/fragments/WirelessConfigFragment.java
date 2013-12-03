@@ -12,6 +12,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
@@ -35,6 +36,8 @@ public class WirelessConfigFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_wireless, container, false);
 
         settings = getActivity().getSharedPreferences(MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         //Mobile stuff
         TelephonyManager telephonyManager =((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE));
@@ -111,6 +114,8 @@ public class WirelessConfigFragment extends Fragment
             {
                 LocalCache lc = null;
 
+                ISPName.setEnabled(false);
+
                 try
                 {
                     WifiManager wifiMgr = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
@@ -134,7 +139,7 @@ public class WirelessConfigFragment extends Fragment
                         {
                             v.setVisibility(View.INVISIBLE);
                             newNetworkIcon.setVisibility(View.INVISIBLE);
-                            ISPName.setEnabled(false);
+
                         }
 
                         @Override
