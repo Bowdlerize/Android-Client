@@ -110,9 +110,9 @@ public class CensorCensusService extends Service
                 .setBigContentTitle("Censor Census - URL Received")
                 .addLine("Received a new url!")
                 .addLine("Performing sanity checks...")
-                .setSummaryText(Integer.toString(checkedCount) + " Checked / " + Integer.toString(censoredCount) + " Censored"))
+                .setSummaryText(Integer.toString(checkedCount) + " Checked / " + Integer.toString(censoredCount) + " Possibly Censored"))
                 .setSmallIcon(R.drawable.ic_stat_in_progress)
-                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_ooni_large))
                 .setPriority(Notification.PRIORITY_MAX)
                 .setTicker("Censor Census - URL Received")
                 .setAutoCancel(false);
@@ -137,7 +137,7 @@ public class CensorCensusService extends Service
                                 .addLine("Started at " + currentDateTimeString)
                                 .addLine("Checking URL.....")
                                 .addLine("MD5: " + intent.getStringExtra("hash"))
-                                .setSummaryText(Integer.toString(checkedCount) + " Checked / " + Integer.toString(censoredCount) + " Censored")
+                                .setSummaryText(Integer.toString(checkedCount) + " Checked / " + Integer.toString(censoredCount) + " Possibly Censored")
                         );
                         mBuilder.setProgress(2,1,true);
                         mNotifyManager.notify(NOTIFICATION_ID, mBuilder.build());
@@ -159,7 +159,7 @@ public class CensorCensusService extends Service
                                     .addLine("Last check: " + currentDateTimeString)
                                     .addLine("Last URL was possibly censored!")
                                     .addLine("MD5: " + intent.getStringExtra("hash"))
-                                    .setSummaryText(Integer.toString(checkedCount) + " Checked / " + Integer.toString(censoredCount) + " Censored")
+                                    .setSummaryText(Integer.toString(checkedCount) + " Checked / " + Integer.toString(censoredCount) + " Possibly Censored")
                             );
                         }
                         else
@@ -168,7 +168,7 @@ public class CensorCensusService extends Service
                                     .setBigContentTitle("Censor Census - Waiting")
                                     .addLine("Last check: " + currentDateTimeString)
                                     .addLine("Last URL wasn't censored!")
-                                    .setSummaryText(Integer.toString(checkedCount) + " Checked / " + Integer.toString(censoredCount) + " Censored")
+                                    .setSummaryText(Integer.toString(checkedCount) + " Checked / " + Integer.toString(censoredCount) + " Possibly Censored")
                             );
                         }
                         mBuilder.setProgress(0,0,false);

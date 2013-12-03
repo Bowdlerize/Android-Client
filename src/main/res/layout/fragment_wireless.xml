@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="WiFi Network:"
+        android:fontFamily="sans-serif-light"
         android:id="@+id/wifiLabel"
         android:layout_below="@+id/descText"
         android:layout_alignLeft="@+id/descText"
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ABC"
+        android:fontFamily="sans-serif-light"
         android:id="@+id/wifiNetwork"
         android:layout_alignRight="@+id/descText"
         android:layout_alignBaseline="@+id/wifiLabel"
@@ -72,6 +74,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Mobile Network:"
+        android:fontFamily="sans-serif-light"
         android:id="@+id/mobileLabel"
         android:layout_alignLeft="@+id/wifiLabel"
         android:paddingTop="20dp"
@@ -84,6 +87,7 @@
         android:text="SIM Network:"
         android:id="@+id/simLabel"
         android:layout_below="@+id/mobileLabel"
+        android:fontFamily="sans-serif-light"
         android:layout_alignLeft="@+id/mobileLabel"
         android:paddingTop="20dp" />
 
@@ -93,6 +97,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/mobileNetwork"
+        android:fontFamily="sans-serif-light"
         android:layout_alignRight="@+id/descText"
         android:layout_alignBaseline="@+id/mobileLabel"
         android:paddingRight="12dp" />
@@ -103,6 +108,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/simNetwork"
+        android:fontFamily="sans-serif-light"
         android:layout_alignBottom="@+id/simLabel"
         android:layout_alignParentRight="true"
         android:paddingRight="12dp" />
