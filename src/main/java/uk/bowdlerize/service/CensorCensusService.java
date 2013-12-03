@@ -21,10 +21,12 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -42,10 +44,14 @@ public class CensorCensusService extends Service
     NotificationManager mNotifyManager;
     NotificationCompat.Builder mBuilder;
     Context mContext;
-    boolean forceCancel = false;
     BroadcastReceiver bR;
     int checkedCount = 0;
     int censoredCount = 0;
+    boolean sendtoORG = false;
+    DefaultHttpClient client;
+    HttpHead headRequest;
+    HttpResponse response = null;
+
 
     @Override
     public IBinder onBind(Intent intent)
@@ -62,6 +68,7 @@ public class CensorCensusService extends Service
 
         checkedCount = getPreferences(this).getInt("checkedCount", 0);
         censoredCount = getPreferences(this).getInt("censoredCount", 0);
+        sendtoORG  = getPreferences(this).getBoolean("sendToOrg", false);
 
         //If this is user submitted send it up for further research
         new Thread
@@ -72,7 +79,14 @@ public class CensorCensusService extends Service
                 public void run()
                 {
                     if(intent.getBooleanExtra("local",false))
+                    {
                         submitURL(intent.getStringExtra("url"));
+
+                        if(sendtoORG)
+                        {
+                            //TODO Also send this URL upstream to ORG
+                        }
+                    }
                 }
             }
         ).start();
@@ -164,6 +178,9 @@ public class CensorCensusService extends Service
                         //Send the details back regardless (will chew DB space but will give a clearer picture)
                         notifyBackEnd(intent.getStringExtra("hash"),"",wasCensored, intent.getStringExtra("isp"), intent.getStringExtra("sim"));
 
+                        if(sendtoORG)
+                            notifyORG(intent.getStringExtra("url"),wasCensored, intent.getStringExtra("isp"), intent.getStringExtra("sim"));
+
                         stopSelf();
                     }
                 }
@@ -237,6 +254,81 @@ public class CensorCensusService extends Service
         }
     }
 
+    private void notifyORG(String url, Pair<Boolean,Integer> results,String ISP, String SIM)
+    {
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        JSONObject json;
+        HttpPost httpost = new HttpPost("https://blocked.org.uk/ooni-backend/submit");
+
+        httpost.setHeader("Accept", "application/json");
+
+        //I don't like YAML
+        JSONObject ooniPayload = new JSONObject();
+
+        //Lazy mass try / catch
+        try
+        {
+            ooniPayload.put("agent","Fake Agent");
+            ooniPayload.put("body_length_match",false);
+            ooniPayload.put("body_proportion",1.0);
+            ooniPayload.put("control_failure",null);
+            ooniPayload.put("experiment_failure",null);
+            ooniPayload.put("factor",0.8);
+            //ooniPayload.put("headers_diff",);
+            ooniPayload.put("headers_match",false);
+
+            //We only handle one request at the time but the spec specifies an array
+            JSONObject ooniRequest = new JSONObject();
+            ooniRequest.put("body",null);
+            JSONObject requestHeaders = new JSONObject();
+            for(Header hdr : headRequest.getAllHeaders())
+            {
+                requestHeaders.put(hdr.getName().toString(),hdr.getValue().toString());
+            }
+            ooniRequest.put("headers",requestHeaders);
+            ooniRequest.put("method","HEAD");
+            ooniRequest.put("url",url);
+
+            JSONObject ooniResponse = new JSONObject();
+            ooniResponse.put("body","");
+            ooniResponse.put("code",response.getStatusLine().getStatusCode());
+            JSONObject responseHeaders = new JSONObject();
+            for(Header hdr : response.getAllHeaders())
+            {
+                responseHeaders.put(hdr.getName().toString(),hdr.getValue().toString());
+            }
+
+            ooniRequest.put("response",ooniResponse);
+
+            JSONArray ooniRequests = new JSONArray();
+            ooniRequests.put(ooniRequest);
+
+            ooniPayload.put("requests",ooniRequests);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            httpost.setEntity(new StringEntity(ooniPayload.toString(), HTTP.UTF_8));
+
+            HttpResponse response = httpclient.execute(httpost);
+            String rawJSON = EntityUtils.toString(response.getEntity());
+            response.getEntity().consumeContent();
+            Log.e("rawJSON",rawJSON);
+            json = new JSONObject(rawJSON);
+
+            //TODO In future versions we'll check for success and store it for later if it failed
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     private void setCounts(boolean Censored)
     {
         checkedCount++;
@@ -264,9 +356,7 @@ public class CensorCensusService extends Service
             checkURL = "http://" + checkURL;
 
         Log.e("Checking url",checkURL);
-        DefaultHttpClient client;
-        HttpHead headRequest;
-        HttpResponse response = null;
+
 
         client = new DefaultHttpClient();
 

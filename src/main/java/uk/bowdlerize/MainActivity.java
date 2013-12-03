@@ -47,6 +47,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import uk.bowdlerize.cache.LocalCache;
 import uk.bowdlerize.fragments.CheckConfigFragment;
+import uk.bowdlerize.fragments.OrgFragment;
 import uk.bowdlerize.fragments.StatsFragment;
 import uk.bowdlerize.fragments.WirelessConfigFragment;
 import uk.bowdlerize.service.CensorCensusService;
@@ -521,6 +522,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
                 case 2:
                 {
+                    getFragment = new OrgFragment();
+                }
+                break;
+
+                case 3:
+                {
                     getFragment = new StatsFragment();
                 }
                 break;
@@ -532,7 +539,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -545,6 +552,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                     return getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return getString(R.string.title_section3).toUpperCase(l);
+                case 3:
+                    return getString(R.string.title_section4).toUpperCase(l);
             }
             return null;
         }
