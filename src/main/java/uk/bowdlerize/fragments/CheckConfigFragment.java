@@ -53,8 +53,10 @@ public class CheckConfigFragment extends Fragment
         ((SeekBar) rootView.findViewById(R.id.seekBar)).setProgress(settings.getInt("maxDelay", 1));
         ((SeekBar) rootView.findViewById(R.id.seekBar)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                seekValue.setText("Waiting....");
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+                //seekValue.setText("Waiting....");
+                seekValue.setText("Wait a minimum of " + Integer.toString(progress) + " minutes between requests");
             }
 
             @Override

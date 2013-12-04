@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Censorship Monitoring Client</string>
-    <string name="actionBarTitle">Bowdlerize - The Censor Census</string>
+    <string name="app_name">Censor Census</string>
+    <string name="actionBarTitle">Censorship Monitoring Project</string>
     <string name="actionBarSubtitle">Making censorship accountable</string>
     <string name="title_section1">Wireless Config</string>
     <string name="title_section2">Request Config</string>
@@ -20,10 +20,13 @@
     <string name="warningAgreed">Thank you for helping to make the Internet more accountable!</string>
 
     <!-- Fragment ORG -->
-    <string name="orgIntro">If you would also like to participate in the Open Rights Group Censorship Monitoring Program ( http://bit.ly/18B4e8Y ) you will need to signup and configure your device as a probe.</string>
+    <string name="orgIntro">If you would also like to participate in the Open Rights Group Censorship Monitoring Project ( http://bit.ly/18B4e8Y ) you will need to signup and configure your device as a probe.</string>
     <string name="orgUnavailable">THIS FEATURE IS UNAVAILABLE AT THE MOMENT</string>
 
     <!--Fragment - Wireless -->
     <string name="wirelessMessage">To better profile which ISPs are censoring and which aren\'t it would be useful to have meta data about the ISP used to check URLs.\n\nBy volunteering this information it will give a clearer picture of the scope of censorship.</string>
     <string name="wirelessNew">This WiFi network hasn\'t been seen before, which ISP does it use?</string>
+
+    <!-- Fragment - Check Config -->
+    <string name="checkConfigFheckBoxLabel">Receive URL check requests and process them automatically</string>
 </resources>
